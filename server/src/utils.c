@@ -5,26 +5,36 @@ t_log* logger;
 int iniciar_servidor(void)
 {
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	assert(!"no implementado!");
+	//assert(!"no implementado!");
 
 	int socket_servidor;
+	int err;
 
-	struct addrinfo hints, *servinfo, *p;
+	struct addrinfo hints, *server_info, *p;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-	getaddrinfo(NULL, PUERTO, &hints, &servinfo);
+	err = getaddrinfo(NULL, PUERTO, &hints, &server_info);
 
 	// Creamos el socket de escucha del servidor
+	socket_servidor = socket(
+		server_info->ai_family,
+		server_info->ai_socktype,
+		server_info->ai_protocol
+	);
 
 	// Asociamos el socket a un puerto
+	err = setsockopt(socket_servidor, SOL_SOCKET, SO_REUSEPORT, &(int){1}, sizeof(int));
+
+	err = bind(socket_servidor, server_info->ai_addr, server_info->ai_addrlen);
 
 	// Escuchamos las conexiones entrantes
+	err = listen(socket_servidor, SOMAXCONN);
 
-	freeaddrinfo(servinfo);
+	freeaddrinfo(server_info);
 	log_trace(logger, "Listo para escuchar a mi cliente");
 
 	return socket_servidor;
@@ -33,13 +43,30 @@ int iniciar_servidor(void)
 int esperar_cliente(int socket_servidor)
 {
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	assert(!"no implementado!");
+	//assert(!"no implementado!");
 
 	// Aceptamos un nuevo cliente
 	int socket_cliente;
-	log_info(logger, "Se conecto un cliente!");
+	socket_cliente = accept(socket_servidor, NULL, NULL);
+	log_info(logger, "Se conecto un cliente! , socket %i",socket_cliente);
 
-	return socket_cliente;
+	// handshake
+	size_t bytes;
+
+	int32_t handshake;
+	int32_t resultOk = 0;
+	int32_t resultError = -1;
+
+	bytes = recv(socket_cliente, &handshake, sizeof(int32_t), MSG_WAITALL);
+	if (handshake == 1) {
+		log_info(logger, "handshake OK!");
+		bytes = send(socket_cliente, &resultOk, sizeof(int32_t), 0);
+		return socket_cliente;
+	} 
+	
+	log_info(logger, "handshake FAIL!");
+	bytes = send(socket_cliente, &resultError, sizeof(int32_t), 0);
+	return NULL;
 }
 
 int recibir_operacion(int socket_cliente)
