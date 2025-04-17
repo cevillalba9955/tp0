@@ -12,6 +12,12 @@
 		},
 		{
 			"path": "server"
+		},
+		{
+			"path": "io"
+		},
+		{
+			"path": "kernel"
 		}
 	]
 }
