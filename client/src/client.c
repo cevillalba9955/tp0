@@ -2,18 +2,10 @@
 
 int main(void)
 {
-	/*---------------------------------------------------PARTE 2-------------------------------------------------------------*/
 
-	int conexion;
-	char* ip;
-	char* puerto;
-	char* clave;
 
-	t_log* logger;
-	t_config* config;
 
 	/* ---------------- LOGGING ---------------- */
-
 	logger = iniciar_logger();
 	log_info(logger,"Hola! Soy un log");
 
@@ -37,7 +29,6 @@ int main(void)
 	/* ---------------- LEER DE CONSOLA ---------------- */
 	// leer_consola(logger);
 
-	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
 
 	// ADVERTENCIA: Antes de continuar, tenemos que asegurarnos que el servidor esté corriendo para poder conectarnos a él
 	// Creamos una conexión hacia el servidor
@@ -74,7 +65,7 @@ int main(void)
 t_log* iniciar_logger(void)
 {
 	t_log* nuevo_logger;
-	char* archivo_log = "/home/utnso/tp0/logs/tp0.log";
+	char* archivo_log = "client.log";
 	char* process_log = "Cliente ";
 	nuevo_logger = log_create(archivo_log,process_log,true,LOG_LEVEL_INFO);
 	return nuevo_logger;
@@ -83,7 +74,7 @@ t_log* iniciar_logger(void)
 t_config* iniciar_config(void)
 {
 	t_config* nuevo_config;
-	nuevo_config = config_create("/home/utnso/tp0/client/cliente.config");
+	nuevo_config = config_create("cliente.config");
 	return nuevo_config;
 }
 

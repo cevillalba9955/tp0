@@ -11,6 +11,13 @@
 
 #include "utils.h"
 
+	int conexion;
+	char* ip;
+	char* puerto;
+	char* clave;
+
+	t_log* logger;
+	t_config* config;
 
 t_log* iniciar_logger(void);
 t_config* iniciar_config(void);
