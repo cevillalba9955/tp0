@@ -60,7 +60,7 @@ int esperar_cliente(int socket_servidor)
 	log_info(logger, "handshake FAIL!");
 	bytes = send(socket_cliente, &resultError, sizeof(int32_t), 0);
 	*/
-	return NULL;
+	return socket_cliente;
 }
 
 int recibir_operacion(int socket_cliente)

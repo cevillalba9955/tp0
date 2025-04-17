@@ -1,16 +1,8 @@
 #include "client.h"
 
-int main(void)
+void start()
 {
-
-
-
-	/* ---------------- LOGGING ---------------- */
 	logger = iniciar_logger();
-	log_info(logger,"Hola! Soy un log");
-
-
-	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
 	config = iniciar_config();
 	if (config == NULL)
 	{
@@ -26,11 +18,14 @@ int main(void)
 	log_info(logger,"el valor puerto es %s",puerto);
 	log_info(logger,"el valor clave es %s",clave);
 
-	/* ---------------- LEER DE CONSOLA ---------------- */
-	// leer_consola(logger);
+}
+
+int main(void)
+{
+	start();
+	
 
 
-	// ADVERTENCIA: Antes de continuar, tenemos que asegurarnos que el servidor esté corriendo para poder conectarnos a él
 	// Creamos una conexión hacia el servidor
 	conexion = crear_conexion(ip, puerto);
 	log_info(logger,"conexion creada %i",conexion);

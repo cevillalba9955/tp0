@@ -13,10 +13,10 @@ void start()
 	{
 		puerto_escucha_io = config_get_string_value(config,"PUERTO_ESCUCHA_IO");
 		log_level = log_level_from_string(config_get_string_value(config,"LOG_LEVEL"));
-
-		logger = log_create("kernel.log","kernel",true,log_level);
-		log_trace(logger,"puerto_escucha_io : %s",puerto_escucha_io);
 	}
+
+	logger = log_create("kernel.log","kernel",true,log_level);
+	log_trace(logger,"puerto_escucha_io : %s",puerto_escucha_io);
 }
 
 int main(void) {

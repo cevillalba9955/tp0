@@ -1,5 +1,4 @@
 #include "io.h"
-
 void start()
 {
 	config = config_create("io.config");
@@ -14,17 +13,14 @@ void start()
 		ip_kernel = config_get_string_value(config,"IP_KERNEL");
 		puerto_kernel = config_get_string_value(config,"PUERTO_KERNEL");
 		log_level = log_level_from_string(config_get_string_value(config,"LOG_LEVEL"));
-
-		logger = log_create("io.log","io",true,log_level);
-		log_trace(logger,"puerto_kernel : %s",puerto_kernel);
-		log_trace(logger,"ip_kernel     : %s",ip_kernel);
 	}
+
+	logger = log_create("io.log","io",true,log_level);
+	log_trace(logger,"puerto_kernel : %s",puerto_kernel);
+	log_trace(logger,"ip_kernel     : %s",ip_kernel);
 }
 
-
-int main(int argc, char *argv[])
-{
-	/* Lee archivo config , inicia logger */
+int main(int argc, char *argv[]){
 	start();
 
 	if(argc > 1)
